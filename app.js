@@ -19,7 +19,7 @@ const jobsRouter = require('./routes/jobs')
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
-app.set('trust proxy', 1) //for rateLimiter we have write this line of code as we are deploying on heroku
+
 app.use(rateLimiter({
   windowMs: 15*60*1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
@@ -28,12 +28,9 @@ app.use(express.json());
 app.use(helmet())
 app.use(cors())
 app.use(xss())
-// extra packages
 
-// routes
-app.get('/', (req, res) => {
-  res.send('jobs api');
-});
+
+
 
 app.use('/api/auth',authRouter)
 app.use('/api/jobs',authenticateUser,jobsRouter)
